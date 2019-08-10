@@ -1,0 +1,19 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="tv-kids;tv-mobile"
+"icon"="D:\\OneDrive\\Pictures\\Operational\\video-play-4-multi-size.ico"
+"Position"="Top" 
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids]
+@="TV Shows - Kids"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 128"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile]
+@="TV Shows - Mobile"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 64"
