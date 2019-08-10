@@ -33,10 +33,14 @@ namespace BatchEncode
 
                 if (info.Extension.ToLower().In(".mp4", ".avi", ".mov", ".mkv", ".flv", ".wmv", ".mpv", ".mpeg", ".m4v", ".3gp", ".3g2", ".f4v", ".f4a", ".f4b"))
                 {
-                    string newFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
+                    string tempFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
+                    string newFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + ".mp4";
 
-                    File.Move(file, newFileName);
-                    EncodeVideo(newFileName, file, presetPath, audioByteRate);
+                    File.Move(file, tempFileName);
+
+                    Console.Out.Write("Encoding video: " + file);
+
+                    EncodeVideo(tempFileName, newFileName, presetPath, audioByteRate);
                 }
             }
         }
@@ -47,8 +51,6 @@ namespace BatchEncode
 
             using (Process proc = new Process())
             {
-                Console.Out.Write("Encoding video: " + outputFile);
-
                 proc.StartInfo.FileName = @"C:\Utilities\HandBrakeCLI\HandBrakeCLI.exe";
                 proc.StartInfo.Arguments = arguments;
                 proc.StartInfo.UseShellExecute = true;
