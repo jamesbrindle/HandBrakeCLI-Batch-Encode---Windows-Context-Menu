@@ -10,10 +10,10 @@ Windows Registry Editor Version 5.00
 @="TV Shows - Kids"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 128"
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-kids-preset.json\" 128"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile]
 @="TV Shows - Mobile"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 64"
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-mobile-preset.json\" 64"
