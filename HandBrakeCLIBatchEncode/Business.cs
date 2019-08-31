@@ -12,6 +12,8 @@ namespace BatchEncode
         private static string PercentageRegEx = @"(\d+)(\.\d{1,2})? %";
         private static string FPSRegEx = @"(\d+)(\.\d{1,2})? fps";
 
+        private static string RecordedOutput = string.Empty;
+
         public static string[] AcceptedFileTypes
         {
             get
@@ -19,6 +21,8 @@ namespace BatchEncode
                 return new string[] { ".mp4", ".avi", ".mov", ".mkv", ".wmv", ".mpv", ".mpeg", "mpg", ".m4v", ".3gp", ".3g2", "ts", "mts", "m2ts", " 4xm", "mtv", "roq", "avm2", "avm2", "flv", "flv", "mj2", "mj2" };
             }
         }
+
+        #region Encoding
 
         public static void EncodeVideos(string root, string presetPath, string audioByteRate)
         {
@@ -33,7 +37,7 @@ namespace BatchEncode
                     acceptedFileList.Add(file);
             }
 
-            Console.Out.WriteLine("\nEncoding videos: " + acceptedFileList.Count + " found...\n");
+            WriteLineAndRecord("\nEncoding videos: " + acceptedFileList.Count + " found...\n");
 
             int i = 1;
 
@@ -70,7 +74,7 @@ namespace BatchEncode
                             }
                             catch
                             {
-                                Console.Out.Write("... FAIL");
+                                WriteAndRecord("... FAIL");
                                 continue;
                             }
                         }
@@ -81,7 +85,7 @@ namespace BatchEncode
                         }
                         catch
                         {
-                            Console.Out.Write("... FAIL");
+                            WriteAndRecord("... FAIL");
 
                             continue;
                         }
@@ -93,24 +97,23 @@ namespace BatchEncode
                 if (info.Directory.FullName != lastDir)
                 {
                     Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.Out.WriteLine("\nFolder: " + info.Directory.FullName + "\n");
+                    WriteLineAndRecord("\nFolder: " + info.Directory.FullName + "\n");
                     Console.ResetColor();
                 }
 
                 lastDir = info.Directory.FullName;
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Out.Write(string.Format("[{0}/{1}]: ", i, acceptedFileList.Count));
+                WriteAndRecord(string.Format("[{0}/{1}]: ", i, acceptedFileList.Count));
                 Console.ResetColor();
-                Console.Out.Write(info.Name);
+                WriteAndRecord(info.Name);
 
                 EncodeVideo(tempFileName, newFileName, presetPath, audioByteRate);
 
                 i++;
             }
 
-            Console.Out.WriteLine("\nEncoding Complete... Exiting\n");
-            Thread.Sleep(5000);
+            WriteOutputToFileOption(WriteToFileType.Encoder);
         }
 
         private static bool EncodeVideo(string inputFile, string outputFile, string presetPath, string audioByteRate)
@@ -126,8 +129,8 @@ namespace BatchEncode
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.EnableRaisingEvents = true;
-                process.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(Process_OutputDataReceived);
-                process.ErrorDataReceived += new System.Diagnostics.DataReceivedEventHandler(Process_ErrorDataReceived);
+                process.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(ProcessEncoder_OutputDataReceived);
+                process.ErrorDataReceived += new System.Diagnostics.DataReceivedEventHandler(ProcessEncoder_ErrorDataReceived);
                 process.Exited += new System.EventHandler(Process_Exited);
 
                 process.Start();
@@ -163,18 +166,19 @@ namespace BatchEncode
             return true;
         }
 
-        private static void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        private static void ProcessEncoder_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            WriteOutput(e.Data);
+            WriteEncoderOutput(e.Data);
         }
 
-        private static void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        private static void ProcessEncoder_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
-            WriteOutput(e.Data);
+            WriteEncoderOutput(e.Data);
         }
 
         private static string _lastOutput = string.Empty;
-        private static void WriteOutput(string output)
+
+        private static void WriteEncoderOutput(string output)
         {
             try
             {
@@ -184,7 +188,7 @@ namespace BatchEncode
                 if (pMc.Count > 0)
                 {
                     string textP = " " + pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "") + "%";
-                    string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "") + "  ";
+                    string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "") + "                  ";
 
                     if (!string.IsNullOrEmpty(_lastOutput))
                         Console.SetCursorPosition(Console.CursorLeft - _lastOutput.Length, Console.CursorTop);
@@ -205,6 +209,124 @@ namespace BatchEncode
             }
         }
 
+        #endregion
+
+        #region Integrity Checking
+
+        public static void IntegrityCheckVideos(string root)
+        {
+            string[] filesList = Directory.GetFiles(root, "*.*", SearchOption.AllDirectories);
+            List<string> acceptedFileList = new List<string>();
+
+            foreach (string file in filesList)
+            {
+                FileInfo info = new FileInfo(file);
+
+                if (info.Extension.ToLower().In(AcceptedFileTypes))
+                    acceptedFileList.Add(file);
+            }
+
+            WriteLineAndRecord("\nIntegrity checking videos: " + acceptedFileList.Count + " found...\n");
+
+            int i = 1;
+
+            string lastDir = string.Empty;
+
+            foreach (string file in acceptedFileList)
+            {
+                FileInfo info = new FileInfo(file);
+
+                if (info.Directory.FullName != lastDir)
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    WriteLineAndRecord("\nFolder: " + info.Directory.FullName + "\n");
+                    Console.ResetColor();
+
+                    lastDir = info.Directory.FullName;
+                }
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                WriteAndRecord(string.Format("[{0}/{1}]: ", i, acceptedFileList.Count));
+                Console.ResetColor();
+                WriteAndRecord(info.Name + "... ");
+
+                IntegrityCheckVideo(file);
+
+                i++;
+            }
+
+            WriteOutputToFileOption(WriteToFileType.IntegrityCheck);
+        }
+
+        private static void IntegrityCheckVideo(string file)
+        {
+            string arguments = @"-i """ + file + @"""" + " - hide_banner";
+
+            errorAlreadyBeenOutput = false;
+
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = Global.FfmpegPath;
+                process.StartInfo.Arguments = arguments;
+
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.EnableRaisingEvents = true;
+                process.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler(ProcessIntegrityCheck_OutputDataReceived);
+                process.ErrorDataReceived += new System.Diagnostics.DataReceivedEventHandler(ProcessIntegrityCheck_ErrorDataReceived);
+                process.Exited += new System.EventHandler(Process_Exited);
+
+                process.Start();
+
+                process.BeginErrorReadLine();
+                process.BeginOutputReadLine();
+
+                process.WaitForExit();
+
+                if (!errorAlreadyBeenOutput)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    WriteAndRecord("OK\n");
+                    Console.ResetColor();
+                }
+            }            
+        }
+
+        private static void ProcessIntegrityCheck_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            WriteIntegrityCheckOutout(e.Data);
+        }
+
+        private static void ProcessIntegrityCheck_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            WriteIntegrityCheckOutout(e.Data);
+        }
+
+        private static bool errorAlreadyBeenOutput = false;
+
+        private static void WriteIntegrityCheckOutout(string output)
+        {
+            if (!errorAlreadyBeenOutput)
+            {
+                if (!string.IsNullOrEmpty(output))
+                {
+                    if (output.Contains("missing mandatory atoms") ||
+                        output.Contains("unspecified pixel format") ||
+                        output.Contains("Could not find codec"))
+                    {
+                        errorAlreadyBeenOutput = true;
+
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        WriteAndRecord("FAIL\n");
+                        Console.ResetColor();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         private static void Process_Exited(object sender, EventArgs e)
         {
             try
@@ -214,13 +336,81 @@ namespace BatchEncode
                     Console.SetCursorPosition(Console.CursorLeft - _lastOutput.Length, Console.CursorTop);
 
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(" 100%               \n");
+                    WriteAndRecord(" 100%                         \n");
                 }
             }
             catch { }
 
             _lastOutput = string.Empty;
+        }
 
+        public enum WriteToFileType
+        {
+            Encoder,
+            IntegrityCheck
+        }
+
+        private static void WriteOutputToFileOption(WriteToFileType writeToFileTypeEnum)
+        {
+            Console.ResetColor();
+
+            string typeTitle = "Operation";
+            string fileTitle = "HandBrakeCLI Batch Encode Output.txt";
+
+            if (writeToFileTypeEnum == WriteToFileType.Encoder)
+            {
+                typeTitle = "Encoding";
+                fileTitle = "HandBrakeCLI Batch Encode Encoder Results.txt";
+            }
+            else if (writeToFileTypeEnum == WriteToFileType.IntegrityCheck)
+            {
+                typeTitle = "Integrity Check";
+                fileTitle = "HandBrakeCLI Integrity Check Results.txt";
+            }
+
+            Console.WriteLine("\n\n" + typeTitle + " Complete... Would you like to output the result? (Y/N):\n");
+            string s = Console.In.ReadLine();
+
+            while (s.ToLower() != "n" && s.ToLower() != "no" && s.ToLower() != "y" && s.ToLower() != "yes")
+            {
+                Console.WriteLine("\nUnregognised character command. Please type 'Y' or 'No' for yes or no respectively: \n");
+                s = Console.In.ReadLine();
+            }
+            if (s.ToLower() == "y" || s.ToLower() == "yes")
+            {
+                Console.WriteLine("\nWriting output to: C:\\Temp\\" + fileTitle + "...");
+               
+                try
+                {
+                    if (!Directory.Exists(@"C:\Temp"))
+                        Directory.CreateDirectory(@"C:\Temp");
+
+                    RecordedOutput += "\n\n\nComplete";
+                    File.WriteAllText(@"C:\Temp\" + fileTitle, RecordedOutput);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Error writing output file:" + e.Message);                    
+                }
+
+                Console.WriteLine("\nExiting...");
+            }
+            else
+                Console.WriteLine("\nExiting...");
+
+            Thread.Sleep(5000);
+        }
+
+        public static void WriteAndRecord(string output)
+        {
+            Console.Out.Write(output);
+            RecordedOutput += output;
+        }
+
+        public static void WriteLineAndRecord(string output)
+        {
+            Console.Out.WriteLine(output);
+            RecordedOutput += "\n" + output + "\n";
         }
     }
 }
