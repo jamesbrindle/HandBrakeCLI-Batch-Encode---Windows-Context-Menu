@@ -387,6 +387,12 @@ namespace BatchEncode
 
                     RecordedOutput += "\n\n\nComplete";
                     File.WriteAllText(@"C:\Temp\" + fileTitle, RecordedOutput);
+
+                    try
+                    {
+                        Process.Start(@"C:\Temp\" + fileTitle);
+                    }
+                    catch { }
                 }
                 catch(Exception e)
                 {
