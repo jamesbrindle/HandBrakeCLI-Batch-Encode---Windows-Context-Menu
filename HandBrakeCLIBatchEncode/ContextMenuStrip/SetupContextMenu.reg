@@ -1,5 +1,8 @@
 Windows Registry Editor Version 5.00
 
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"MultipleInvokePromptMinimum"=dword:000001f4
+
 [HKEY_CLASSES_ROOT\SystemFileAssociations\.mj2\shell\BatchEncodeMenu]
 "MUIVerb"="Batch Encode Videos"
 "SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high"

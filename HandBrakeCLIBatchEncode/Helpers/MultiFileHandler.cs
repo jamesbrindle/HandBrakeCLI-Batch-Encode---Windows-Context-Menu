@@ -10,16 +10,13 @@ namespace HandBrakeCLIBatchEncode
         private static readonly string _tempRoot = Path.Combine(Path.GetTempPath(), ".hbcbe_temp");
         private static readonly string _busyFile = Path.Combine(_tempRoot,  "busy");
 
+        public static bool IsBusy { get { return File.Exists(_busyFile); } }
+
         public static void SetBusyFlag()
         {
             File.Create(_busyFile).Dispose();
         }
-
-        public static bool IsBusy()
-        {
-            return File.Exists(_busyFile);
-        }
-
+ 
         public static void AddFile(string path)
         {
             if (!Directory.Exists(_tempRoot))

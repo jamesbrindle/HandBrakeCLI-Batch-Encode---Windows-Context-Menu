@@ -11,30 +11,7 @@ namespace HandBrakeCLIBatchEncode
     {
         public void EncodeVideos(string rootFileOrCombined, string presetPath, string presetName, string audioByteRate)
         {
-            List<string> acceptedFileList = new List<string>();
-
-            if (rootFileOrCombined.Contains(";"))
-                acceptedFileList.AddRange(rootFileOrCombined.Split(';').Where(f => new FileInfo(f).Extension.In(Global.CompatibleExtensions)));
-
-            else
-            {
-                if (rootFileOrCombined.IsFile())
-                {
-                    FileInfo info = new FileInfo(rootFileOrCombined);
-                    if (info.Extension.ToLower().In(Global.CompatibleExtensions))
-                        acceptedFileList.Add(rootFileOrCombined);
-                }
-                else
-                {
-                    string[] filesList = Directory.GetFiles(rootFileOrCombined, "*.*", SearchOption.AllDirectories);
-                    foreach (string file in filesList)
-                    {
-                        FileInfo info = new FileInfo(file);
-                        if (info.Extension.ToLower().In(Global.CompatibleExtensions))
-                            acceptedFileList.Add(file);
-                    }
-                }
-            }
+            List<string> acceptedFileList = GenericHelper.GetCompatibleFiles(rootFileOrCombined);
 
             WriteLineAndRecord("\n Encoding videos: " + acceptedFileList.Count + " found...\n");
 

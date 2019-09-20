@@ -52,6 +52,7 @@
     <Compile Include="Business\_BatchEncoder.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Helpers\GenericHelper.cs" />
     <Compile Include="Helpers\MultiFileHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

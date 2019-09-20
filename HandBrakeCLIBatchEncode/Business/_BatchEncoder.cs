@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ namespace HandBrakeCLIBatchEncode
     {
         internal bool _errorOutputFlag = false;
         internal string _lastOutput = string.Empty;
-
+        
         public virtual void ProcessBatch_OutputDataReceived<T>(object sender, DataReceivedEventArgs e)
         {
             WriteBatchOutput<T>(e.Data);

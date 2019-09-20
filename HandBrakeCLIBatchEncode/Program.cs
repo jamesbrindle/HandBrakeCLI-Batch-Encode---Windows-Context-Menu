@@ -22,7 +22,7 @@ namespace HandBrakeCLIBatchEncode
                     CreateNew(args);
                 else
                 {
-                    if (MultiFileHandler.IsBusy())
+                    if (MultiFileHandler.IsBusy)
                     {
                         IntPtr handle = Process.GetCurrentProcess().MainWindowHandle;
                         ShowWindow(handle, 6);
