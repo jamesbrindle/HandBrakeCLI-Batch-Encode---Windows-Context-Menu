@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,14 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Business\IBatchEncoder.cs" />
+    <Compile Include="Business\Processes\IntegrityChecker.cs" />
+    <Compile Include="Business\Processes\Encoder.cs" />
+    <Compile Include="Business\_BatchEncoder.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="Helpers\MultiFileHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ContextMenuStrip\SetupContextMenu.reg" />
+    <None Include="Presents\generic-high.json" />
+    <None Include="Presents\generic-low.json" />
+    <None Include="Presents\generic-medium.json" />
+    <None Include="Presents\tv-kids-preset.json" />
+    <None Include="Presents\tv-mobile-preset.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ContextMenuStrip\video-play-4-multi-size.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
