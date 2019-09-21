@@ -11,90 +11,102 @@ namespace HandBrakeCLIBatchEncode
     {
         public void EncodeVideos(string rootFileOrCombined, string presetPath, string presetName, string audioByteRate)
         {
-            List<string> acceptedFileList = GenericHelper.GetCompatibleFiles(rootFileOrCombined);
-
-            WriteLineAndRecord("\n Encoding videos: " + acceptedFileList.Count + " found...\n");
-
-            int i = 1;
-
-            string lastDir = string.Empty;
-
-            foreach (string file in acceptedFileList)
+            if (!PresetValidator.ValidatePreset(presetPath, presetName, out string msg))
             {
-                FileInfo info = new FileInfo(file);
+                WriteLineAndRecord(msg);
 
-                string tempFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
-                string newFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + Global.DefaultOutputExtension;
+                Console.WriteLine("\n\n\n Exiting...");
+                Thread.Sleep(2500);
+            }
+            else
+            {
+                List<string> acceptedFileList = GenericHelper.GetCompatibleFiles(rootFileOrCombined);
 
-                #region Rename file
+                WriteLineAndRecord("\n Encoding videos: " + acceptedFileList.Count + " found...\n");
 
-                try
+                int i = 1;
+
+                string lastDir = string.Empty;
+
+                foreach (string file in acceptedFileList)
                 {
-                    File.Move(file, tempFileName);
-                }
-                catch (Exception e)
-                {
-                    if (e.Message.Contains("already exists"))
+                    FileInfo info = new FileInfo(file);
+
+                    string tempFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
+                    string newFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + Global.DefaultOutputExtension;
+
+                    #region Rename file
+
+                    try
                     {
-                        try
+                        File.Move(file, tempFileName);
+                    }
+                    catch (Exception e)
+                    {
+                        if (e.Message.Contains("already exists"))
                         {
-                            File.Delete(tempFileName);
-                        }
-                        catch
-                        {
-                            Thread.Sleep(1000);
-
                             try
                             {
                                 File.Delete(tempFileName);
                             }
                             catch
                             {
+                                Thread.Sleep(1000);
+
+                                try
+                                {
+                                    File.Delete(tempFileName);
+                                }
+                                catch
+                                {
+                                    WriteAndRecord("... FAIL");
+                                    continue;
+                                }
+                            }
+
+                            try
+                            {
+                                File.Move(file, tempFileName);
+                            }
+                            catch
+                            {
                                 WriteAndRecord("... FAIL");
+
                                 continue;
                             }
                         }
-
-                        try
-                        {
-                            File.Move(file, tempFileName);
-                        }
-                        catch
-                        {
-                            WriteAndRecord("... FAIL");
-
-                            continue;
-                        }
                     }
-                }
 
-                #endregion
+                    #endregion
 
-                if (info.Directory.FullName != lastDir)
-                {
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    WriteLineAndRecord("\n Folder: " + info.Directory.FullName + "\n");
+                    if (info.Directory.FullName != lastDir)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        WriteLineAndRecord("\n Folder: " + info.Directory.FullName + "\n");
+                        Console.ResetColor();
+                    }
+
+                    lastDir = info.Directory.FullName;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    WriteAndRecord(string.Format(" [{0}/{1}]: ", i, acceptedFileList.Count));
                     Console.ResetColor();
+                    WriteAndRecord(info.Name);
+
+                    PerformVideoEncode(tempFileName, newFileName, presetPath, presetName, audioByteRate);
+
+                    i++;
                 }
 
-                lastDir = info.Directory.FullName;
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                WriteAndRecord(string.Format(" [{0}/{1}]: ", i, acceptedFileList.Count));
-                Console.ResetColor();
-                WriteAndRecord(info.Name);
-
-                PerformVideoEncode(tempFileName, newFileName, presetPath, presetName, audioByteRate);
-
-                i++;
+                WriteOutputToFileOption<Encoder>();
             }
-
-            WriteOutputToFileOption<Encoder>();
         }
 
         private bool PerformVideoEncode(string inputFile, string outputFile, string presetPath, string presetName, string audioByteRate)
         {
             string arguments = @"-i """ + inputFile + @""" -o """ + outputFile + @""" --preset-import-file """ + presetPath + @""" -Z """ + presetName + @""" - B " + audioByteRate;
+
+            Console.Out.WriteLine(arguments);
 
             using (Process process = new Process())
             {

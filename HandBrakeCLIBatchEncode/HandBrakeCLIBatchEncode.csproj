@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,8 +53,9 @@
     <Compile Include="Business\_BatchEncoder.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="Helpers\GenericHelper.cs" />
+    <Compile Include="Helpers\Generic.cs" />
     <Compile Include="Helpers\MultiFileHandler.cs" />
+    <Compile Include="Helpers\PresetValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +65,7 @@
     <None Include="Presents\generic-high.json" />
     <None Include="Presents\generic-low.json" />
     <None Include="Presents\generic-medium.json" />
+    <None Include="Presents\quality.json" />
     <None Include="Presents\tv-kids-preset.json" />
     <None Include="Presents\tv-mobile-preset.json" />
   </ItemGroup>

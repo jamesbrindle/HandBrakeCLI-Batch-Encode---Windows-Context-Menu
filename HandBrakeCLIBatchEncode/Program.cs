@@ -49,8 +49,8 @@ namespace HandBrakeCLIBatchEncode
             BatchEncoder.WriteLineAndRecord("");
 
 #if DEBUG
-            //new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\tv-kids-preset.json", "128");
-            new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp");
+            new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
+            //new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp\control.mkv");
 #else
             Console.Out.WriteLine("\n\n Waiting for other files to be added...\n");
 
