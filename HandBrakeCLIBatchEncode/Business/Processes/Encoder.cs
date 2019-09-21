@@ -106,8 +106,6 @@ namespace HandBrakeCLIBatchEncode
         {
             string arguments = @"-i """ + inputFile + @""" -o """ + outputFile + @""" --preset-import-file """ + presetPath + @""" -Z """ + presetName + @""" - B " + audioByteRate;
 
-            Console.Out.WriteLine(arguments);
-
             using (Process process = new Process())
             {
                 process.StartInfo.FileName = Global.HandrakeCLIPath;
