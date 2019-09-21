@@ -85,7 +85,7 @@
         "eng"
       ],
       "SubtitleTrackSelectionBehavior": "first",
-      "VideoAvgBitrate": 12000,
+      "VideoAvgBitrate": 8000,
       "VideoColorMatrixCode": 0,
       "VideoEncoder": "nvenc_h264",
       "VideoFramerate": "29.97",
