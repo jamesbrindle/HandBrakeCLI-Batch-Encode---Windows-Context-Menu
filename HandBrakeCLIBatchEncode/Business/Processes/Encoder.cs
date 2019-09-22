@@ -22,7 +22,7 @@ namespace HandBrakeCLIBatchEncode
             {
                 List<string> acceptedFileList = GenericHelper.GetCompatibleFiles(rootFileOrCombined);
 
-                WriteLineAndRecord("\n Encoding videos: " + acceptedFileList.Count + " found...\n");
+                WriteLineAndRecord("\n Encoding videos (" + presetName + "): " + acceptedFileList.Count + " found...\n");
 
                 int i = 1;
 
