@@ -1,13 +1,12 @@
-﻿using HandBrakeCLIBatchEncode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace HandBrakeCLIBatchEncode
 {
-    public class GenericHelper
-    {
-        public static List<string> GetCompatibleFiles(string rootFileOrCombined)
+    internal class GenericHelper
+    { 
+        internal static List<string> GetCompatibleFiles(string rootFileOrCombined)
         {
             var compatibleFileList = new List<string>();
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 namespace System
@@ -13,7 +12,20 @@ namespace System
 
         public static bool IsFile(this string path)
         {
-            return !File.GetAttributes(path).HasFlag(FileAttributes.Directory);
+            try
+            {
+                return !File.GetAttributes(path).HasFlag(FileAttributes.Directory);
+            }
+            catch { return false; }
+        }
+
+        public static bool IsDirectory(this string path)
+        {
+            try
+            {
+                return File.GetAttributes(path).HasFlag(FileAttributes.Directory);
+            }
+            catch { return false; }
         }
     }
 }

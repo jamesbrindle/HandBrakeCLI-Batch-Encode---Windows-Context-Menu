@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace HandBrakeCLIBatchEncode
 {
-    public class MultiFileHandler
+    internal class MultiFileHandler
     {
         private static readonly string _tempRoot = Path.Combine(Path.GetTempPath(), ".hbcbe_temp");
         private static readonly string _busyFile = Path.Combine(_tempRoot,  "busy");
 
-        public static bool IsBusy { get { return File.Exists(_busyFile); } }
+        internal static bool IsBusy { get { return File.Exists(_busyFile); } }
 
-        public static void SetBusyFlag()
+        internal static void SetBusyFlag()
         {
             File.Create(_busyFile).Dispose();
         }
- 
-        public static void AddFile(string path)
+
+        internal static void AddFile(string path)
         {
             if (!Directory.Exists(_tempRoot))
                 Directory.CreateDirectory(_tempRoot);
@@ -25,7 +25,7 @@ namespace HandBrakeCLIBatchEncode
             File.WriteAllText(_tempRoot + "\\" + Guid.NewGuid().ToString(), path);
         }
 
-        public static List<string> GetFilesInSession()
+        internal static List<string> GetFilesInSession()
         {
             var inputFiles = new List<string>();
 
@@ -37,7 +37,7 @@ namespace HandBrakeCLIBatchEncode
             return inputFiles;
         }
 
-        public static void ResetHandler()
+        internal static void ResetHandler()
         {
             DirectoryInfo dir = new DirectoryInfo(_tempRoot);
 

@@ -51,6 +51,7 @@
     <Compile Include="Business\Processes\IntegrityChecker.cs" />
     <Compile Include="Business\Processes\Encoder.cs" />
     <Compile Include="Business\_BatchEncoder.cs" />
+    <Compile Include="Helpers\ConsoleSpinner.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Helpers\Generic.cs" />

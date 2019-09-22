@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HandBrakeCLIBatchEncode
 {
@@ -22,7 +21,11 @@ namespace HandBrakeCLIBatchEncode
             {
                 List<string> acceptedFileList = GenericHelper.GetCompatibleFiles(rootFileOrCombined);
 
-                WriteLineAndRecord("\n Encoding videos (" + presetName + "): " + acceptedFileList.Count + " found...\n");
+                WriteAndRecord("\n\n Encoding videos (");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                WriteAndRecord(presetName);
+                Console.ResetColor();
+                WriteAndRecord("): " + acceptedFileList.Count + " found...\n\n") ;
 
                 int i = 1;
 
@@ -71,7 +74,6 @@ namespace HandBrakeCLIBatchEncode
                             catch
                             {
                                 WriteAndRecord("... FAIL");
-
                                 continue;
                             }
                         }

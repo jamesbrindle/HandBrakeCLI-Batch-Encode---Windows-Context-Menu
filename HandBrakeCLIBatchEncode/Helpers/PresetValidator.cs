@@ -5,26 +5,9 @@ using System.Text;
 
 namespace HandBrakeCLIBatchEncode
 {
-    public static class PresetValidator
+    internal static class PresetValidator
     {
-        public static bool PresetExists(string presetPath)
-        {
-            return File.Exists(presetPath);
-        }
-
-        public static bool IsJsonText(string jsonText)
-        {
-            try
-            {
-                var jsonObject = JSONSerializer.DeSerialize(jsonText);
-                return true;
-            }
-            catch { }
-
-            return false;
-        }
-
-        public static bool ValidatePreset(string presetPath, string presetName, out string msg)
+        internal static bool ValidatePreset(string presetPath, string presetName, out string msg)
         {
             msg = "";
             bool isValid = true;
@@ -80,14 +63,32 @@ namespace HandBrakeCLIBatchEncode
 
             return isValid;
         }
+
+        private static bool PresetExists(string presetPath)
+        {
+            return File.Exists(presetPath);
+        }
+
+        private static bool IsJsonText(string jsonText)
+        {
+            try
+            {
+                var jsonObject = JSONSerializer.DeSerialize(jsonText);
+                return true;
+            }
+            catch { }
+
+            return false;
+        }
+
     }
 
-    public static class JSONSerializer
+    internal static class JSONSerializer
     {
         /// <summary>
         /// DeSerializes an object from JSON
         /// </summary>
-        public static object DeSerialize(string json)
+        internal static object DeSerialize(string json)
         {
             using (var stream = new MemoryStream(Encoding.Default.GetBytes(json)))
             {

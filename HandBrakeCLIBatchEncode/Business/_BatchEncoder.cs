@@ -158,7 +158,10 @@ namespace HandBrakeCLIBatchEncode
                     WriteAndRecord(" 100%                         \n");
                 }
             }
-            catch { }
+            catch {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                WriteAndRecord(" 100%                         \n");
+            }
 
             _lastOutput = string.Empty;
         }
