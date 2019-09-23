@@ -37,6 +37,8 @@ namespace HandBrakeCLIBatchEncode
 
         private static void CreateNew(string[] args)
         {
+            MultiFileHandler.SetBusyFlag();
+
             CenterConsole();
 
             Console.CursorVisible = false;
@@ -56,18 +58,17 @@ namespace HandBrakeCLIBatchEncode
 #else
             Console.Out.Write("\n\n\n Waiting for other files to be added...  ");
 
-            ConsoleSpinner.ShowSpinner();
-            MultiFileHandler.SetBusyFlag();
+            ConsoleSpinner.ShowSpinner();            
 
             while (MultiFileHandler.IsBusy)
-                Thread.Sleep(100);
+                Thread.Sleep(200);
 
             ConsoleSpinner.StopSpinner();
             Console.Out.WriteLine("\n");
 
             List<string> otherFiles = MultiFileHandler.GetFilesInSession();
 
-            Thread.Sleep(100); // allow clearing of locks
+            Thread.Sleep(200); // allow clearing of locks
 
             MultiFileHandler.ResetHandler();
 

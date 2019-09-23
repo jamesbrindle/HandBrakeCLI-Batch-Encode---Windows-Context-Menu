@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Threading;
 
 namespace HandBrakeCLIBatchEncode
@@ -15,7 +16,28 @@ namespace HandBrakeCLIBatchEncode
         {
             get
             {
-                return (File.Exists(_busyFile));
+                var cache = MemoryCache.Default;
+
+                var key = "busyFile";
+                var value = "my value";
+                var policy = new CacheItemPolicy { SlidingExpiration = new TimeSpan(2, 0, 0) };
+                cache.Add(key, value, policy);
+
+                if (!File.Exists(_busyFile))
+                    return false;
+
+                else
+                {
+                    try
+                    {
+                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-5);
+                    }
+                    catch
+                    {
+                        Thread.Sleep(120);
+                        return IsBusy;
+                    }
+                }
             }
         }
 
@@ -23,12 +45,18 @@ namespace HandBrakeCLIBatchEncode
         {
             try
             {
-                if (!File.Exists(_busyFile))
-                    File.Create(_busyFile).Dispose();
+                int fileCount = 0;
+
+                if (File.Exists(_busyFile))
+                    fileCount = Convert.ToInt32(File.ReadAllText(_busyFile).Trim());
+
+                fileCount++;
+
+                File.WriteAllText(_busyFile, fileCount.ToString());                
             }
             catch
             {
-                Thread.Sleep(100);
+                Thread.Sleep(150);
                 SetBusyFlag();
             }
         }
