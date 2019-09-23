@@ -3,13 +3,29 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace HandBrakeCLIBatchEncode
 {
     public class Encoder : BatchEncoder
     {
+        static ConsoleEventDelegate handler;
+
+        private delegate bool ConsoleEventDelegate(int eventType);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool SetConsoleCtrlHandler(ConsoleEventDelegate callback, bool add);
+
+        public static string TempFilePath { get; set; } = string.Empty;
+
+        public static string NewFilePath { get; set; } = string.Empty;
+
+        public static bool ClosingPrematurely { get; set; } = false;
+
         public void EncodeVideos(string rootFileOrCombined, string presetPath, string presetName, string audioByteRate)
         {
+            handler = new ConsoleEventDelegate(ConsoleEventCallback);
+            SetConsoleCtrlHandler(handler, true);
+
             if (!PresetValidator.ValidatePreset(presetPath, presetName, out string msg))
             {
                 WriteLineAndRecord(msg);
@@ -25,7 +41,7 @@ namespace HandBrakeCLIBatchEncode
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 WriteAndRecord(presetName);
                 Console.ResetColor();
-                WriteAndRecord("): " + acceptedFileList.Count + " found...\n\n") ;
+                WriteAndRecord("): " + acceptedFileList.Count + " found...\n\n");
 
                 int i = 1;
 
@@ -35,14 +51,14 @@ namespace HandBrakeCLIBatchEncode
                 {
                     FileInfo info = new FileInfo(file);
 
-                    string tempFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
-                    string newFileName = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + Global.DefaultOutputExtension;
+                    TempFilePath = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
+                    NewFilePath = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + Global.DefaultOutputExtension;
 
                     #region Rename file
 
                     try
                     {
-                        File.Move(file, tempFileName);
+                        File.Move(file, TempFilePath);
                     }
                     catch (Exception e)
                     {
@@ -50,7 +66,7 @@ namespace HandBrakeCLIBatchEncode
                         {
                             try
                             {
-                                File.Delete(tempFileName);
+                                File.Delete(TempFilePath);
                             }
                             catch
                             {
@@ -58,7 +74,7 @@ namespace HandBrakeCLIBatchEncode
 
                                 try
                                 {
-                                    File.Delete(tempFileName);
+                                    File.Delete(TempFilePath);
                                 }
                                 catch
                                 {
@@ -69,7 +85,7 @@ namespace HandBrakeCLIBatchEncode
 
                             try
                             {
-                                File.Move(file, tempFileName);
+                                File.Move(file, TempFilePath);
                             }
                             catch
                             {
@@ -95,12 +111,19 @@ namespace HandBrakeCLIBatchEncode
                     Console.ResetColor();
                     WriteAndRecord(info.Name);
 
-                    PerformVideoEncode(tempFileName, newFileName, presetPath, presetName, audioByteRate);
+                    PerformVideoEncode(TempFilePath, NewFilePath, presetPath, presetName, audioByteRate);
 
                     i++;
                 }
 
-                WriteOutputToFileOption<Encoder>();
+                new Thread((ThreadStart)delegate
+                {
+                    Thread.Sleep(500);
+
+                    if (!ClosingPrematurely)
+                        WriteOutputToFileOption<Encoder>();
+
+                }).Start();                
             }
         }
 
@@ -131,27 +154,66 @@ namespace HandBrakeCLIBatchEncode
 
             #region Delete temp file
 
-            try
-            {
-                File.Delete(inputFile);
-            }
-            catch
-            {
-                Thread.Sleep(1000);
+            // Need to delay so that if closing the application prematurely, run the 'ConsoleEventCallback' method first so that
+            // We don't delete the original file
 
-                try
+            new Thread((ThreadStart)delegate
+            {
+                Thread.Sleep(2000);
+
+                if (!ClosingPrematurely)
                 {
-                    File.Delete(inputFile);
+                    try
+                    {
+                        File.Delete(inputFile);
+                    }
+                    catch
+                    {
+                        Thread.Sleep(500);
+
+                        try
+                        {
+                            File.Delete(inputFile);
+                        }
+                        catch
+                        {
+                            // Forget it
+                        }
+                    }
                 }
-                catch
-                {
-                    // Forget it
-                }
-            }
+
+            }).Start();
 
             #endregion
 
             return true;
+        }
+
+        static bool ConsoleEventCallback(int eventType)
+        {
+            if (eventType == 2)
+            {
+                ClosingPrematurely = true;
+
+                if (File.Exists(TempFilePath) && File.Exists(NewFilePath))
+                {
+                    // closing prematurely
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\n\n\n User closed prematurely. Cleaning up files...");
+
+                    try
+                    {
+                        File.Delete(NewFilePath);
+                        File.Move(TempFilePath, NewFilePath);
+                    }
+                    catch { }
+
+                    Thread.Sleep(5000);
+                }
+            }
+
+            return false;
         }
     }
 }

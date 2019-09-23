@@ -52,22 +52,23 @@ namespace HandBrakeCLIBatchEncode
             BatchEncoder.WriteAndRecord("                    \\/\n");
             BatchEncoder.WriteLineAndRecord("");
 #if DEBUG
-            //new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
-            new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp\control.mp4");
+            new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
+            //new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp\control.mp4");
 #else
             Console.Out.Write("\n\n\n Waiting for other files to be added...  ");
 
             ConsoleSpinner.ShowSpinner();
+            MultiFileHandler.SetBusyFlag();            
 
-            MultiFileHandler.SetBusyFlag();
-            Thread.Sleep(6000); // Give time for Windows to add mulitple files
+            while(MultiFileHandler.IsBusy)
+                Thread.Sleep(100);
 
             ConsoleSpinner.StopSpinner();
             Console.Out.WriteLine("\n");
             
             List<string> otherFiles = MultiFileHandler.GetFilesInSession();
 
-            Thread.Sleep(200); // allow clearing of locks
+            Thread.Sleep(100); // allow clearing of locks
 
             MultiFileHandler.ResetHandler();
 

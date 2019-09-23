@@ -172,6 +172,7 @@ namespace HandBrakeCLIBatchEncode
         #region Properties
 
         public virtual string PercentageRegEx { get; set; } = @"(\d+)(\.\d{1,2})? %";
+
         public virtual string FPSRegEx { get; set; } = @"(\d+)(\.\d{1,2})? fps";
 
         internal static string RecordedOutput { get; set; } = string.Empty;

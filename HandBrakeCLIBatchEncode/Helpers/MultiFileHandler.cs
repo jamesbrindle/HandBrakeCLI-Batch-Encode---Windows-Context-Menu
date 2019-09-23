@@ -8,9 +8,19 @@ namespace HandBrakeCLIBatchEncode
     internal class MultiFileHandler
     {
         private static readonly string _tempRoot = Path.Combine(Path.GetTempPath(), ".hbcbe_temp");
-        private static readonly string _busyFile = Path.Combine(_tempRoot,  "busy");
+        private static readonly string _busyFile = Path.Combine(_tempRoot, "busy");
 
-        internal static bool IsBusy { get { return File.Exists(_busyFile); } }
+        internal static bool IsBusy
+        {
+            get
+            {
+                if (!File.Exists(_busyFile))
+                    return false;
+
+                else
+                    return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-2);
+            }
+        }
 
         internal static void SetBusyFlag()
         {
@@ -19,6 +29,8 @@ namespace HandBrakeCLIBatchEncode
 
         internal static void AddFile(string path)
         {
+            SetBusyFlag();
+
             if (!Directory.Exists(_tempRoot))
                 Directory.CreateDirectory(_tempRoot);
 
