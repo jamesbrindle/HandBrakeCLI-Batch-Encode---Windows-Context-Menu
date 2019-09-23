@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>video-play-4-multi-size.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -75,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ContextMenuStrip\video-play-4-multi-size.ico" />
+    <Content Include="video-play-4-multi-size.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
