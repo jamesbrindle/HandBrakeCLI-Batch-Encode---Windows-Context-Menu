@@ -22,7 +22,7 @@ namespace HandBrakeCLIBatchEncode
                 {
                     try
                     {
-                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-4);
+                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-5);
                     }
                     catch
                     {
