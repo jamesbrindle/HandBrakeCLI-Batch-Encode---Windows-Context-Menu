@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -8,10 +7,17 @@ namespace HandBrakeCLIBatchEncode
 {
     class Program
     {
-        [DllImport("User32.dll", CallingConvention = CallingConvention.StdCall, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
+        internal const int MF_BYCOMMAND = 0x00000000;
+        internal const int SC_CLOSE = 0xF060;
 
-        private static extern bool ShowWindow([In] IntPtr hWnd, [In] int nCmdShow);
+        [DllImport("user32.dll")]
+        internal static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("kernel32.dll", ExactSpelling = true)]
+        internal static extern IntPtr GetConsoleWindow();
 
         [STAThread]
         static void Main(string[] args)
@@ -23,11 +29,7 @@ namespace HandBrakeCLIBatchEncode
                 else
                 {
                     if (MultiFileHandler.IsBusy)
-                    {
-                        IntPtr handle = Process.GetCurrentProcess().MainWindowHandle;
-                        ShowWindow(handle, 6);
                         MultiFileHandler.AddFile(args[1]);
-                    }
                     else
                         CreateNew(args);
                 }
@@ -36,6 +38,8 @@ namespace HandBrakeCLIBatchEncode
 
         private static void CreateNew(string[] args)
         {
+            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
+
             Console.CursorVisible = false;
             Console.Title = "HandBrakeCLI Batch Encoder";
 
@@ -56,7 +60,7 @@ namespace HandBrakeCLIBatchEncode
             ConsoleSpinner.ShowSpinner();
 
             MultiFileHandler.SetBusyFlag();
-            Thread.Sleep(3000); // Give time for Windows to add mulitple files
+            Thread.Sleep(6000); // Give time for Windows to add mulitple files
 
             ConsoleSpinner.StopSpinner();
             Console.Out.WriteLine("\n");

@@ -10,20 +10,42 @@ namespace HandBrakeCLIBatchEncode
         {
             var compatibleFileList = new List<string>();
 
-            if (rootFileOrCombined.Contains(";"))
+            try
             {
-                string[] parts = rootFileOrCombined.Split(';');
 
-                foreach (var part in parts)
+                if (rootFileOrCombined.Contains(";"))
                 {
-                    if (part.IsFile())
+                    string[] parts = rootFileOrCombined.Split(';');
+
+                    foreach (var part in parts)
                     {
-                        if (new FileInfo(part).Extension.ToLower().In(Global.CompatibleExtensions))
-                            compatibleFileList.Add(part);
+                        if (part.IsFile())
+                        {
+                            if (new FileInfo(part).Extension.ToLower().In(Global.CompatibleExtensions))
+                                compatibleFileList.Add(part);
+                        }
+                        else
+                        {
+                            string[] filesList = Directory.GetFiles(part, "*.*", SearchOption.AllDirectories);
+                            foreach (string file in filesList)
+                            {
+                                if (new FileInfo(file).Extension.ToLower().In(Global.CompatibleExtensions))
+                                    compatibleFileList.Add(file);
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    if (rootFileOrCombined.IsFile())
+                    {
+                        if (new FileInfo(rootFileOrCombined).Extension.ToLower().In(Global.CompatibleExtensions))
+                            compatibleFileList.Add(rootFileOrCombined);
                     }
                     else
                     {
-                        string[] filesList = Directory.GetFiles(part, "*.*", SearchOption.AllDirectories);
+                        string[] filesList = Directory.GetFiles(rootFileOrCombined, "*.*", SearchOption.AllDirectories);
                         foreach (string file in filesList)
                         {
                             if (new FileInfo(file).Extension.ToLower().In(Global.CompatibleExtensions))
@@ -31,25 +53,9 @@ namespace HandBrakeCLIBatchEncode
                         }
                     }
                 }
-            }
 
-            else
-            {
-                if (rootFileOrCombined.IsFile())
-                {
-                    if (new FileInfo(rootFileOrCombined).Extension.ToLower().In(Global.CompatibleExtensions))
-                        compatibleFileList.Add(rootFileOrCombined);
-                }
-                else
-                {
-                    string[] filesList = Directory.GetFiles(rootFileOrCombined, "*.*", SearchOption.AllDirectories);
-                    foreach (string file in filesList)
-                    {
-                        if (new FileInfo(file).Extension.ToLower().In(Global.CompatibleExtensions))
-                            compatibleFileList.Add(file);
-                    }
-                }
             }
+            catch { }
 
             return compatibleFileList;
         }
