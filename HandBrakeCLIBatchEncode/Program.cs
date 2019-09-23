@@ -87,8 +87,7 @@ namespace HandBrakeCLIBatchEncode
         public static void CenterConsole()
         {
             IntPtr hWin = GetConsoleWindow();
-            RECT rc;
-            GetWindowRect(hWin, out rc);
+            GetWindowRect(hWin, out RECT rc);
             Screen scr = Screen.FromPoint(new Point(rc.left, rc.top));
 
             int x = scr.WorkingArea.Left + (scr.WorkingArea.Width - (rc.right - rc.left)) / 2;
