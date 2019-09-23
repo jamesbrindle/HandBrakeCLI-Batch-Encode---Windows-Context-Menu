@@ -49,6 +49,9 @@ namespace HandBrakeCLIBatchEncode
 
                 foreach (string file in acceptedFileList)
                 {
+                    if (ClosingPrematurely)
+                        break;
+
                     FileInfo info = new FileInfo(file);
 
                     TempFilePath = info.DirectoryName + "\\" + Path.GetFileNameWithoutExtension(file) + "_" + info.Extension;
@@ -111,7 +114,8 @@ namespace HandBrakeCLIBatchEncode
                     Console.ResetColor();
                     WriteAndRecord(info.Name);
 
-                    PerformVideoEncode(TempFilePath, NewFilePath, presetPath, presetName, audioByteRate);
+                    if (!ClosingPrematurely)
+                        PerformVideoEncode(TempFilePath, NewFilePath, presetPath, presetName, audioByteRate);
 
                     i++;
                 }
@@ -123,7 +127,7 @@ namespace HandBrakeCLIBatchEncode
                     if (!ClosingPrematurely)
                         WriteOutputToFileOption<Encoder>();
 
-                }).Start();                
+                }).Start();
             }
         }
 

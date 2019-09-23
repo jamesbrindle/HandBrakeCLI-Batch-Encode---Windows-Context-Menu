@@ -96,8 +96,6 @@ namespace HandBrakeCLIBatchEncode
                 fileTitle = "HandBrakeCLI Integrity Check Results.txt";
             }
 
-            Program.DeleteMenu(Program.GetSystemMenu(Program.GetConsoleWindow(), true), Program.SC_CLOSE, Program.MF_BYCOMMAND);
-
             Console.Write("\n\n\n " + typeTitle + " Complete... Would you like to output the result? (Y/N): ");
             char c = Console.ReadKey().KeyChar;
 

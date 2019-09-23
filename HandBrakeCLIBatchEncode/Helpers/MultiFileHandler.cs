@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace HandBrakeCLIBatchEncode
 {
@@ -18,13 +19,31 @@ namespace HandBrakeCLIBatchEncode
                     return false;
 
                 else
-                    return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-2);
+                {
+                    try
+                    {
+                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-2);
+                    }
+                    catch
+                    {
+                        Thread.Sleep(100);
+                        return IsBusy;
+                    }
+                }
             }
         }
 
         internal static void SetBusyFlag()
         {
-            File.Create(_busyFile).Dispose();
+            try
+            {
+                File.Create(_busyFile).Dispose();
+            }
+            catch
+            {
+                Thread.Sleep(100);
+                SetBusyFlag();
+            }
         }
 
         internal static void AddFile(string path)

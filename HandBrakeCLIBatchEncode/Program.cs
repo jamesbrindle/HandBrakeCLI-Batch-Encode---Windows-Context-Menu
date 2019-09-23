@@ -1,24 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using System.Diagnostics;
 using System.Threading;
 
 namespace HandBrakeCLIBatchEncode
 {
     class Program
     {
-        internal const int MF_BYCOMMAND = 0x00000000;
-        internal const int SC_CLOSE = 0xF060;
-
-        [DllImport("user32.dll")]
-        internal static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
-
-        [DllImport("user32.dll")]
-        internal static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-
-        [DllImport("kernel32.dll", ExactSpelling = true)]
-        internal static extern IntPtr GetConsoleWindow();
-
         [STAThread]
         static void Main(string[] args)
         {
@@ -38,8 +26,6 @@ namespace HandBrakeCLIBatchEncode
 
         private static void CreateNew(string[] args)
         {
-            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
-
             Console.CursorVisible = false;
             Console.Title = "HandBrakeCLI Batch Encoder";
 
