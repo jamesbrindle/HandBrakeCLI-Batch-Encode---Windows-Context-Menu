@@ -210,6 +210,8 @@ namespace HandBrakeCLIBatchEncode
                     {
                         File.Delete(NewFilePath);
                         File.Move(TempFilePath, NewFilePath);
+
+                        MultiFileHandler.ResetHandler();
                     }
                     catch { }
 

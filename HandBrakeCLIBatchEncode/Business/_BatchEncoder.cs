@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -11,7 +10,10 @@ namespace HandBrakeCLIBatchEncode
     {
         internal bool _errorOutputFlag = false;
         internal string _lastOutput = string.Empty;
-        
+        private bool _readingSuccessful = false;
+        internal static int _originalX = -1;
+        internal static int _originalY = -1;
+
         public virtual void ProcessBatch_OutputDataReceived<T>(object sender, DataReceivedEventArgs e)
         {
             WriteBatchOutput<T>(e.Data);
@@ -30,29 +32,45 @@ namespace HandBrakeCLIBatchEncode
             {
                 try
                 {
-                    MatchCollection pMc = Regex.Matches(output, PercentageRegEx);
-                    MatchCollection fpsMc = Regex.Matches(output, FPSRegEx);
-
-                    if (pMc.Count > 0)
+                    if (output != null)
                     {
-                        string textP = " " + pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "") + "%";
-                        string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "") + "                  ";
+                        MatchCollection pMc = Regex.Matches(output, PercentageRegEx);
+                        MatchCollection fpsMc = Regex.Matches(output, FPSRegEx);
 
-                        if (!string.IsNullOrEmpty(_lastOutput))
-                            Console.SetCursorPosition(Console.CursorLeft - _lastOutput.Length, Console.CursorTop);
+                        if (pMc != null && fpsMc != null)
+                        {
+                            if (pMc.Count > 0)
+                            {
+                                if (_originalX == -1)
+                                {
+                                    _originalX = Console.CursorLeft;
+                                    _originalY = Console.CursorTop;
+                                }
 
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write(textP);
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(textFPS);
+                                for (int i = 0; i < _lastOutput.Length; i++)
+                                    Console.Write("\b");
 
-                        Console.ResetColor();
+                                string textP = " " + pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "") + "%";
+                                string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "" + "   ");
 
-                        _lastOutput = textP + textFPS;
+                                if (!string.IsNullOrEmpty(_lastOutput))
+                                    Console.SetCursorPosition(_originalX, _originalY);
+
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.Write(textP);
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write(textFPS);
+
+                                Console.ResetColor();
+
+                                _lastOutput = textP + textFPS;
+                            }
+                        }
                     }
                 }
-                catch
+                catch (Exception)
                 {
+                    // Console.Out.WriteLine(e);
                     // nevermind
                 }
             }
@@ -99,7 +117,7 @@ namespace HandBrakeCLIBatchEncode
             Console.Write("\n\n\n " + typeTitle + " Complete... Would you like to output the result? (Y/N): ");
             char c = Console.ReadKey().KeyChar;
 
-            while (c != 'n' && c != 'N'  && c != 'y' && c != 'Y')
+            while (c != 'n' && c != 'N' && c != 'y' && c != 'Y')
             {
                 Console.Write("\n\n Unregognised character command. Please type 'Y' or 'N' for yes or no respectively: ");
                 c = Console.ReadKey().KeyChar;
@@ -145,23 +163,36 @@ namespace HandBrakeCLIBatchEncode
         {
             Console.Out.WriteLine(output);
             RecordedOutput += "\n" + output + "\n";
-        }
+        }        
 
         public virtual void Process_Exited(object sender, EventArgs e)
         {
-            try
+            if (!string.IsNullOrEmpty(_lastOutput))
             {
-                if (!string.IsNullOrEmpty(_lastOutput))
-                {
-                    Console.SetCursorPosition(Console.CursorLeft - _lastOutput.Length, Console.CursorTop);
+                _readingSuccessful = true;
+                Console.SetCursorPosition(_originalX, _originalY);
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    WriteAndRecord(" 100%                         \n");
-                }
-            }
-            catch {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                WriteAndRecord(" 100%                         \n");
+
+                string pad = "";
+                for (int i = 0; i < _lastOutput.Length - 5; i++)
+                    pad += " ";
+
+                WriteAndRecord(" 100%" + pad + "\n");
+
+                _originalY = -1;
+                _originalX = -1;
+            }
+            else
+            {
+                if (!_readingSuccessful && Console.CursorLeft > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteAndRecord(" FAIL\n");
+                    Console.ResetColor();
+                }
+
+                _readingSuccessful = false;
             }
 
             _lastOutput = string.Empty;

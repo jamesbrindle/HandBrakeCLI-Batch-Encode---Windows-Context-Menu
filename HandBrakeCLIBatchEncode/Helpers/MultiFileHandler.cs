@@ -22,7 +22,7 @@ namespace HandBrakeCLIBatchEncode
                 {
                     try
                     {
-                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-2);
+                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-4);
                     }
                     catch
                     {
@@ -60,7 +60,7 @@ namespace HandBrakeCLIBatchEncode
         {
             var inputFiles = new List<string>();
 
-            string[] files = Directory.GetFiles(_tempRoot).Where(f => new FileInfo(f).CreationTime > DateTime.Now.AddSeconds(-6.2) && new FileInfo(f).Name != "busy").ToArray();
+            string[] files = Directory.GetFiles(_tempRoot).Where(f => new FileInfo(f).Name != "busy").ToArray();
 
             foreach (string file in files)
                 inputFiles.Add(File.ReadAllText(file).Replace("\n", "").Replace("\r", "").Trim());
