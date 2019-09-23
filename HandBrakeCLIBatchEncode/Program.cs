@@ -12,11 +12,20 @@ namespace HandBrakeCLIBatchEncode
         // P/Invoke declarations
         private struct RECT { public int left, top, right, bottom; }
         [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr GetConsoleWindow();
+        internal static extern IntPtr GetConsoleWindow();
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool GetWindowRect(IntPtr hWnd, out RECT rc);
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int w, int h, bool repaint);
+
+        internal const int MF_BYCOMMAND = 0x00000000;
+        internal const int SC_CLOSE = 0xF060;
+
+        [DllImport("user32.dll")]
+        internal static extern int DeleteMenu(IntPtr hMenu, int nPosition, int wFlags);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
         [STAThread]
         static void Main(string[] args)
@@ -40,6 +49,7 @@ namespace HandBrakeCLIBatchEncode
             MultiFileHandler.SetBusyFlag();
 
             CenterConsole();
+            DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
 
             Console.CursorVisible = false;
             Console.Title = "HandBrakeCLI Batch Encoder";
