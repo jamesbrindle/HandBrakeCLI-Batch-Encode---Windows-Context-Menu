@@ -15,21 +15,7 @@ namespace HandBrakeCLIBatchEncode
         {
             get
             {
-                if (!File.Exists(_busyFile))
-                    return false;
-
-                else
-                {
-                    try
-                    {
-                        return new FileInfo(_busyFile).LastWriteTime > DateTime.Now.AddSeconds(-5);
-                    }
-                    catch
-                    {
-                        Thread.Sleep(100);
-                        return IsBusy;
-                    }
-                }
+                return (File.Exists(_busyFile));
             }
         }
 
@@ -37,7 +23,8 @@ namespace HandBrakeCLIBatchEncode
         {
             try
             {
-                File.Create(_busyFile).Dispose();
+                if (!File.Exists(_busyFile))
+                    File.Create(_busyFile).Dispose();
             }
             catch
             {
