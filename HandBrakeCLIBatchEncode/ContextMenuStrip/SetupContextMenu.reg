@@ -123,12 +123,6 @@ Windows Registry Editor Version 5.00
 "icon"="D:\\OneDrive\\Pictures\\Operational\\video-play-4-multi-size.ico"
 "Position"="Middle" 
 
-[HKEY_CLASSES_ROOT\Directory\Background\shell\BatchEncodeMenu]
-"MUIVerb"="Batch Encode Videos"
-"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
-"icon"="D:\\OneDrive\\Pictures\\Operational\\video-play-4-multi-size.ico"
-"Position"="Middle" 
-
 [HKEY_CLASSES_ROOT\Directory\shell\BatchEncodeMenu]
 "MUIVerb"="Batch Encode Videos"
 "SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
@@ -176,3 +170,52 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality\command]
 @="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLI\\presets\\quality.json\" \"Quality\" 256"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity2;tv-kids2;tv-mobile2;generic-low2;generic-medium2;generic-high2;quality2"
+"icon"="D:\\OneDrive\\Pictures\\Operational\\video-play-4-multi-size.ico"
+"NoWorkingDirectory"=""
+"Position"="Middle" 
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity2]
+@="VIDEO INTEGRITY CHECK"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" i \"%V\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids2]
+@="TV Shows - Kids"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 96"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile2]
+@="TV Shows - Mobile"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 72"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low2]
+@="Generic - Low"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\generic-low.json\" \"Generic - Low\" 128"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium2]
+@="Generic - Medium"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\generic-medium.json\" \"Generic - Medium\" 192"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high2]
+@="Generic - High"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\generic-high.json\" \"Generic - High\" 256"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality2]
+@="Quality"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality2\command]
+@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLI\\presets\\quality.json\" \"Quality\" 256"

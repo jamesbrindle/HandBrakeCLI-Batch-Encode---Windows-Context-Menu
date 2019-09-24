@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HandBrakeCLIBatchEncode
 {
@@ -48,7 +47,7 @@ namespace HandBrakeCLIBatchEncode
         {
             string arguments = @"-i """ + file + @"""" + " - hide_banner";
 
-            _errorOutputFlag = false;
+            ErrorOutputFlag = false;
 
             using (Process process = new Process())
             {
@@ -70,7 +69,7 @@ namespace HandBrakeCLIBatchEncode
 
                 process.WaitForExit();
 
-                if (!_errorOutputFlag)
+                if (!ErrorOutputFlag)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     WriteAndRecord("OK\n");

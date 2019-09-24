@@ -15,11 +15,11 @@ namespace HandBrakeCLIBatchEncode
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool SetConsoleCtrlHandler(ConsoleEventDelegate callback, bool add);
 
-        public static string TempFilePath { get; set; } = string.Empty;
+        internal static string TempFilePath { get; set; } = string.Empty;
 
-        public static string NewFilePath { get; set; } = string.Empty;
+        internal static string NewFilePath { get; set; } = string.Empty;
 
-        public static bool ClosingPrematurely { get; set; } = false;
+        internal static bool ClosingPrematurely { get; set; } = false;
 
         public void EncodeVideos(string rootFileOrCombined, string presetPath, string presetName, string audioByteRate)
         {

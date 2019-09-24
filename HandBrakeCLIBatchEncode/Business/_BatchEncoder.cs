@@ -8,11 +8,23 @@ namespace HandBrakeCLIBatchEncode
 {
     public abstract class BatchEncoder : IBatchEncoder
     {
-        internal bool _errorOutputFlag = false;
-        internal string _lastOutput = string.Empty;
-        private bool _readingSuccessful = false;
+        #region Properties
+
+        public virtual string PercentageRegEx { get; set; } = @"(\d+)(\.\d{1,2})? %";
+
+        public virtual string FPSRegEx { get; set; } = @"(\d+)(\.\d{1,2})? fps";
+
+        internal static string RecordedOutput { get; set; } = string.Empty;
+
+        internal static bool ErrorOutputFlag { get; set; } = false;
+
+        #endregion
+
+        internal string _lastOutput = string.Empty;        
         internal static int _originalX = -1;
         internal static int _originalY = -1;
+
+        private bool _readingSuccessful = false;
 
         public virtual void ProcessBatch_OutputDataReceived<T>(object sender, DataReceivedEventArgs e)
         {
@@ -22,6 +34,39 @@ namespace HandBrakeCLIBatchEncode
         public virtual void ProcessBatch_ErrorDataReceived<T>(object sender, DataReceivedEventArgs e)
         {
             WriteBatchOutput<T>(e.Data);
+        }
+
+        public virtual void Process_Exited(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(_lastOutput))
+            {
+                _readingSuccessful = true;
+                Console.SetCursorPosition(_originalX, _originalY);
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                string pad = "";
+                for (int i = 0; i < _lastOutput.Length - 5; i++)
+                    pad += " ";
+
+                WriteAndRecord(" 100%" + pad + "\n");
+
+                _originalY = -1;
+                _originalX = -1;
+            }
+            else
+            {
+                if (!_readingSuccessful && Console.CursorLeft > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    WriteAndRecord(" FAIL\n");
+                    Console.ResetColor();
+                }
+
+                _readingSuccessful = false;
+            }
+
+            _lastOutput = string.Empty;
         }
 
         public virtual void WriteBatchOutput<T>(string output)
@@ -47,11 +92,12 @@ namespace HandBrakeCLIBatchEncode
                                     _originalY = Console.CursorTop;
                                 }
 
-                                for (int i = 0; i < _lastOutput.Length; i++)
-                                    Console.Write("\b");
+                                string pad = "";
+                                for (int i = 0; i < _lastOutput.Length - 5; i++)
+                                    pad += " ";
 
                                 string textP = " " + pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "") + "%";
-                                string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "" + "   ");
+                                string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "" + pad);
 
                                 if (!string.IsNullOrEmpty(_lastOutput))
                                     Console.SetCursorPosition(_originalX, _originalY);
@@ -77,7 +123,9 @@ namespace HandBrakeCLIBatchEncode
 
             if (batchType == typeof(IntegrityChecker))
             {
-                if (!_errorOutputFlag)
+                _readingSuccessful = true;
+
+                if (!ErrorOutputFlag)
                 {
                     if (!string.IsNullOrEmpty(output))
                     {
@@ -85,7 +133,8 @@ namespace HandBrakeCLIBatchEncode
                             output.Contains("unspecified pixel format") ||
                             output.Contains("Could not find codec"))
                         {
-                            _errorOutputFlag = true;
+                            ErrorOutputFlag = true;
+                            _readingSuccessful = true;
 
                             Console.ForegroundColor = ConsoleColor.Red;
                             WriteAndRecord("FAIL\n");
@@ -121,7 +170,7 @@ namespace HandBrakeCLIBatchEncode
 
             while (c != 'n' && c != 'N' && c != 'y' && c != 'Y')
             {
-                Console.Write("\n\n Unregognised character command. Please type 'Y' or 'N' for yes or no respectively: ");
+                Console.Write("\n\n Unrecognised character command. Please type 'Y' or 'N' for yes or no respectively: ");
                 c = Console.ReadKey().KeyChar;
             }
             if (c == 'y' || c == 'Y')
@@ -165,49 +214,6 @@ namespace HandBrakeCLIBatchEncode
         {
             Console.Out.WriteLine(output);
             RecordedOutput += "\n" + output + "\n";
-        }        
-
-        public virtual void Process_Exited(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(_lastOutput))
-            {
-                _readingSuccessful = true;
-                Console.SetCursorPosition(_originalX, _originalY);
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-
-                string pad = "";
-                for (int i = 0; i < _lastOutput.Length - 5; i++)
-                    pad += " ";
-
-                WriteAndRecord(" 100%" + pad + "\n");
-
-                _originalY = -1;
-                _originalX = -1;
-            }
-            else
-            {
-                if (!_readingSuccessful && Console.CursorLeft > 0)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    WriteAndRecord(" FAIL\n");
-                    Console.ResetColor();
-                }
-
-                _readingSuccessful = false;
-            }
-
-            _lastOutput = string.Empty;
-        }
-
-        #region Properties
-
-        public virtual string PercentageRegEx { get; set; } = @"(\d+)(\.\d{1,2})? %";
-
-        public virtual string FPSRegEx { get; set; } = @"(\d+)(\.\d{1,2})? fps";
-
-        internal static string RecordedOutput { get; set; } = string.Empty;
-
-        #endregion
+        }  
     }
 }

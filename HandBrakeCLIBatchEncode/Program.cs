@@ -63,8 +63,8 @@ namespace HandBrakeCLIBatchEncode
             BatchEncoder.WriteAndRecord("                    \\/\n");
             BatchEncoder.WriteLineAndRecord("");
 #if DEBUG
-            new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
-            //new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp\control.mp4");
+            //new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
+            new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp");
 #else
             Console.Out.Write("\n\n\n Waiting for other files to be added...  ");
 
@@ -95,7 +95,7 @@ namespace HandBrakeCLIBatchEncode
 #endif
         }
 
-        public static void CenterConsole()
+        internal static void CenterConsole()
         {
             IntPtr hWin = GetConsoleWindow();
             GetWindowRect(hWin, out RECT rc);
