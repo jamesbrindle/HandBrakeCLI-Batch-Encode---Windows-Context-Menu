@@ -63,8 +63,8 @@ namespace HandBrakeCLIBatchEncode
             BatchEncoder.WriteAndRecord("                    \\/\n");
             BatchEncoder.WriteLineAndRecord("");
 #if DEBUG
-            //new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLI\presets\quality.json", "Quality", "128");
-            new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp");
+            new Encoder().EncodeVideos(@"D:\Desktop\New folder", @"C:\Utilities\HandBrakeCLI\presets\generic-medium.json", "Generic - Medium", "128");
+            //new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp");
 #else
             Console.Out.Write("\n\n\n Waiting for other files to be added...  ");
 

@@ -47,6 +47,9 @@ namespace HandBrakeCLIBatchEncode
             {
                 int fileCount = 0;
 
+                if (!Directory.Exists(_tempRoot))
+                    Directory.CreateDirectory(_tempRoot);
+
                 if (File.Exists(_busyFile))
                     fileCount = Convert.ToInt32(File.ReadAllText(_busyFile).Trim());
 
