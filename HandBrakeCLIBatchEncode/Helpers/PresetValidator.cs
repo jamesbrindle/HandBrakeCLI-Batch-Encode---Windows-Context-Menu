@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System;
 
 namespace HandBrakeCLIBatchEncode
 {
@@ -64,7 +65,31 @@ namespace HandBrakeCLIBatchEncode
             return isValid;
         }
 
+        internal static bool ChangeEncoder(string presetPath, string oldEncoder, string newEncoder)
+        {
+            try
+            {
+                string presetText = File.ReadAllText(presetPath);
+                presetText = presetText.Replace(oldEncoder, newEncoder);
+
+                if (newEncoder == "x264")
+                    presetText = presetText.Replace("slow", "quality");
+                else
+                    presetText = presetText.Replace("quality", "slow");
+
+                File.WriteAllText(presetPath, presetText);
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+#pragma warning disable IDE0051 // Remove unused private members
         private static bool PresetExists(string presetPath)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             return File.Exists(presetPath);
         }
@@ -80,7 +105,6 @@ namespace HandBrakeCLIBatchEncode
 
             return false;
         }
-
     }
 
     internal static class JSONSerializer

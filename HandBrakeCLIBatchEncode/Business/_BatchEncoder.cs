@@ -49,7 +49,20 @@ namespace HandBrakeCLIBatchEncode
                 for (int i = 0; i < _lastOutput.Length - 5; i++)
                     pad += " ";
 
-                WriteAndRecord(" 100%" + pad + "\n");
+                Thread.Sleep(1000);
+
+                if (!Encoder.StartEncodeSuccess)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Out.Write("\n          -- Incompatible encoder. Trying another... ");
+                    Console.ResetColor();
+
+                    Encoder.TryAnotherEncoder = true;
+                }
+                else
+                {
+                    WriteAndRecord(" 100%" + pad + "\n");
+                }
 
                 _originalY = -1;
                 _originalX = -1;
@@ -59,7 +72,7 @@ namespace HandBrakeCLIBatchEncode
                 if (!_readingSuccessful && Console.CursorLeft > 0)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    WriteAndRecord(" FAIL\n");
+                    WriteAndRecord("\n FAIL\n");
                     Console.ResetColor();
                 }
 
@@ -96,7 +109,30 @@ namespace HandBrakeCLIBatchEncode
                                 for (int i = 0; i < _lastOutput.Length - 5; i++)
                                     pad += " ";
 
-                                string textP = " " + pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "") + "%";
+                                string textP = pMc[pMc.Count - 1].Value.ToString().Replace(" ", "").Replace("%", "");
+
+                                try
+                                {
+                                    if (!Encoder.StartEncodeSuccess)
+                                    {
+                                        if (double.TryParse(textP, out double percent))
+                                        {
+                                            if (percent > 0)
+                                            {
+                                                if (!output.Contains("Scanning"))
+                                                {
+                                                    Encoder.StartEncodeSuccess = true;
+
+                                                    Encoder.TryAnotherEncoder = false;
+                                                    Encoder.DontDeleteTempFile = false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                catch { }
+
+                                textP = " " + textP + "%";
                                 string textFPS = (fpsMc.Count > 0 && fpsMc[fpsMc.Count - 1].Value.ToString().Length > 3 ? " (" + fpsMc[fpsMc.Count - 1].Value.ToString() + ")" : "" + pad);
 
                                 if (!string.IsNullOrEmpty(_lastOutput))

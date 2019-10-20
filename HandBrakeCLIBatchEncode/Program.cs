@@ -63,7 +63,7 @@ namespace HandBrakeCLIBatchEncode
             BatchEncoder.WriteAndRecord("                    \\/\n");
             BatchEncoder.WriteLineAndRecord("");
 #if DEBUG
-            new Encoder().EncodeVideos(@"C:\Users\jamesb1\Downloads", @"C:\Utilities\HandBrakeCLIBatchEncode\presets\generic-medium.json", "Generic - Medium", "128");
+            new Encoder().EncodeVideos(@"C:\Temp", @"C:\Utilities\HandBrakeCLIBatchEncode\presets\generic-medium.json", "Generic - Medium", "128");
             //new IntegrityChecker().IntegrityCheckVideos(@"C:\Temp");
 #else
             Console.Out.Write("\n\n\n Waiting for other files to be added...  ");
