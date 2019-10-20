@@ -1,0 +1,15 @@
+﻿
+1. After compiling, output should be in /bin/Utilitites
+2. Copy Utilities folder to C:\
+3. Run HandBrake installer located: 'C:\Utilities\HandBrakCLIBatchEncode\HandBrakeInstaller if not already installed
+4. Run SetupContextMenu.reg
+
+DONE!
+
+You should now be able to right click a video or a folder and have available to Batch Encode context menu.
+
+Enjoy
+
+TROUBLESHOOTING
+
+Try swapping out the presets for compatables ones (in presets subfolders)

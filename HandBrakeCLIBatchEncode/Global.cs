@@ -28,7 +28,7 @@ namespace HandBrakeCLIBatchEncode
                 }
                 catch
                 {
-                    return @"C:\Utilities\HandBrakeCLI\HandBrakeCLI.exe";
+                    return @"C:\Utilities\HandBrakeCLIBatchEncode\HandBrakeCLI\HandBrakeCLI.exe";
                 }
             }
         }
@@ -42,7 +42,7 @@ namespace HandBrakeCLIBatchEncode
                 }
                 catch
                 {
-                    return @"C:\Utilities\ffmpeg\ffmpeg.exe";
+                    return @"C:\Utilities\HandBrakeCLIBatchEncode\ffmpeg\ffmpeg.exe";
                 }
             }
         }
