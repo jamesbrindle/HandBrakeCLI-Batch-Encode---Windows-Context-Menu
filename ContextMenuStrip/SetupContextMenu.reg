@@ -1,43 +1,221 @@
 Windows Registry Editor Version 5.00
 
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"MultipleInvokePromptMinimum"=dword:0000012c
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mj2\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.flv\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.avm2\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.roq\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mtv\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.4xm\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.m2ts\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mts\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.ts\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.3g2\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.3gp\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.m4v\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mpg\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mpeg\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mpv\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.wmv\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mkv\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mov\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.avi\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
+[HKEY_CLASSES_ROOT\SystemFileAssociations\.mp4\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"Position"="Middle" 
+
 [HKEY_CLASSES_ROOT\Directory\shell\BatchEncodeMenu]
 "MUIVerb"="Batch Encode Videos"
-"SubCommands"="integrity;tv-kids;tv-mobile;phone-low;phone-medium;phone-high"
-"icon"="D:\\OneDrive\\Pictures\\Operational\\video-play-4-multi-size.ico"
+"SubCommands"="integrity;tv-kids;tv-mobile;generic-low;generic-medium;generic-high;quality"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
 "Position"="Top" 
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity]
 @="VIDEO INTEGRITY CHECK"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" i \"%1\""
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" i \"%1\""
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids]
 @="TV Shows - Kids"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 128"
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 96"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile]
 @="TV Shows - Mobile"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 64"
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 72"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-low]
-@="Phone Video - Low"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low]
+@="Generic - Low"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-low\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\phone-low.json\" \"Phone Video - Low\" 64"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-low.json\" \"Generic - Low\" 128"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-medium]
-@="Phone Video - Medium"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium]
+@="Generic - Medium"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-medium\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\phone-medium.json\" \"Phone Video - Medium\" 128"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-medium.json\" \"Generic - Medium\" 192"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-high]
-@="Phone Video - High"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high]
+@="Generic - High"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\phone-high\command]
-@="\"C:\\Utilities\\HandBrakeCLI\\BatchEncode.exe\" e \"%1\" --preset-import-file \"C:\\Utilities\\HandBrakeCLI\\presets\\phone-high.json\" \"Phone Video - High\" 192"
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-high.json\" \"Generic - High\" 256"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality]
+@="Quality"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%1\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\quality.json\" \"Quality\" 256"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\BatchEncodeMenu]
+"MUIVerb"="Batch Encode Videos"
+"SubCommands"="integrity2;tv-kids2;tv-mobile2;generic-low2;generic-medium2;generic-high2;quality2"
+"icon"="C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.ico"
+"NoWorkingDirectory"=""
+"Position"="Middle" 
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity2]
+@="VIDEO INTEGRITY CHECK"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\integrity2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" i \"%V\""
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids2]
+@="TV Shows - Kids"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-kids2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\tv-kids-preset.json\" \"TV Shows - Kids\" 96"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile2]
+@="TV Shows - Mobile"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\tv-mobile2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\tv-mobile-preset.json\" \"TV Shows - Mobile\" 72"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low2]
+@="Generic - Low"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-low2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-low.json\" \"Generic - Low\" 128"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium2]
+@="Generic - Medium"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-medium2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-medium.json\" \"Generic - Medium\" 192"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high2]
+@="Generic - High"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\generic-high2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\generic-high.json\" \"Generic - High\" 256"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality2]
+@="Quality"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\quality2\command]
+@="\"C:\\Utilities\\HandBrakeCLIBatchEncode\\BatchEncode.exe\" e \"%V\" \"C:\\Utilities\\HandBrakeCLIBatchEncode\\presets\\quality.json\" \"Quality\" 256"
