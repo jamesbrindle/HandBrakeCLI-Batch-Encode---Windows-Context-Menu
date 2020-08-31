@@ -1,5 +1,6 @@
 # HandBrake CLI - Windows Context Menu Batch Encode
-&nbsp;
+
+
 This is a very simple console application written in C# that allows batch encoding of videos from accessible from the Windows Shell Context menu on folders:
 
 [![N|HandBrakeCLIContextMenu](https://portfolio.jb-net.co.uk/shared/HBBatchEncode.png)]()
